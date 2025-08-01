@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain-core 
+langchain-google-genai
+google-generativeai
+faiss-cpu
+playwright
+beautifulsoup4
+ddgs  

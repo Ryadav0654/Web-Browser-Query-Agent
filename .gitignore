@@ -1,0 +1,4 @@
+.venv
+faiss_index_google
+__pycache__
+.streamlit
