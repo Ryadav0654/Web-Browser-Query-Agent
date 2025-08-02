@@ -58,7 +58,7 @@ def is_query_valid(query: str) -> bool:
     - "asdfghjkl"
 
     Now, classify the following query: "{query}"
-    Respond with only the word 'VALID' or 'INVALID'.
+    Respond with only the word 'Yes' or 'No'.
     """
     validation_prompt = PromptTemplate.from_template(prompt_template)
 
@@ -66,9 +66,9 @@ def is_query_valid(query: str) -> bool:
     validation_chain = validation_prompt | llm | StrOutputParser()
 
     try:
-        result_text = validation_chain.invoke({"query": query}).strip().upper()
+        result_text = validation_chain.invoke({"query": query}).strip().lower()
         st.write(f"Validator Response: {result_text}")  # For debugging
-        return "VALID" in result_text
+        return "yes" in result_text
     except Exception as e:
         st.error(f"Error during validation: {e}")
         return False
@@ -236,6 +236,7 @@ if st.button("Search", key="search_button"):
             status.update(label="1/5 - Validating query...")
             if not is_query_valid(query):
                 st.error("This is not a valid query. Please enter something you would search on Google.")
+                final_output = "This is not a valid query. Please enter something you would search on Google."
                 status.update(label="Validation Failed", state="error", expanded=False)
             else:
                 # Step 2: Check for cached results in FAISS
